@@ -1,4 +1,5 @@
 import scrapy
+from testspider.items import TestspiderItem
 
 
 class CosSpider(scrapy.Spider):
@@ -7,4 +8,8 @@ class CosSpider(scrapy.Spider):
     start_urls = ['http://dl.ixxcc.com/NSFW/Cosplay/']
 
     def parse(self, response):
-        pass
+        filenames = response.css('.file')
+        for name in filenames:
+            item = TestspiderItem()
+            item['filename'] = name.css('.name::text').extract_first()
+            yield item
