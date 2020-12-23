@@ -26,6 +26,9 @@ class CosSpider(scrapy.Spider):
         # picnames = response.xpath('//tr[@class="file"]//a//span/text()').extract()
 
         urls = response.xpath('//tr[@class="file"]//a/@href').extract()
+        for index in range(len(urls)):
+            url = urls[index]
+            urls[index] = response.urljoin(url)
         yield TestspiderItem(folder_name=folder_name, image_urls=urls)
         # for index in range(len(picnames)):
         #     print(picnames[index])

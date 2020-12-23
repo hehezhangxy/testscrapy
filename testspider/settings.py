@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'testspider.spiders'
 # USER_AGENT = 'testspider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
@@ -61,9 +61,11 @@ DOWNLOAD_DELAY = 0.5
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'testspider.pipelines.TestspiderPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   # 'testspider.pipelines.TestspiderPipeline': 300,
+   'testspider.pipelines.CosPicPipeLine': 1,
+   # 'scrapy.pipelines.images.ImagesPipeline': 1,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -86,4 +88,4 @@ DOWNLOAD_DELAY = 0.5
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 # store location
-IMAGES_STORE = 'D:\\file'
+IMAGES_STORE = 'D:\\file\\cos'
