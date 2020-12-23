@@ -17,11 +17,15 @@ class CosSpider(scrapy.Spider):
 
             print(filenames[index])
             print(trueurl)
-            yield scrapy.Request(url=trueurl, meta={'filename': filenames[index]}, callback=self.parse2)
+            yield scrapy.Request(url=trueurl, meta={'filename': filenames[index]}, callback=self.parse2, dont_filter=True)
 
     def parse2(self, response):
         filename = response.meta['filename']
+        print(filename)
         picnames = response.xpath('//tr[@class="file"]//a//span/text()').extract()
+
         urls = response.xpath('//tr[@class="file"]//a/@href').extract()
-        for url in urls:
-            downloadurl = response.urljoin(url)
+        for index in range(len(picnames)):
+            print(picnames[index])
+            downloadurl = response.urljoin(urls[index])
+            print(downloadurl)
