@@ -8,24 +8,26 @@ class CosSpider(scrapy.Spider):
     start_urls = ['http://dl.ixxcc.com/NSFW/Cosplay/']
 
     def parse(self, response):
-        filenames = response.xpath('//tr[@class="file"]//span/text()').extract()
+        foldernames = response.xpath('//tr[@class="file"]//span/text()').extract()
         picsurls = response.xpath('//tr[@class="file"]//a/@href').extract()
         # urls = response.urljoin(picsurl)
 
-        for index in range(len(filenames)):
+        for index in range(len(foldernames)):
             trueurl = response.urljoin(picsurls[index])
 
-            print(filenames[index])
-            print(trueurl)
-            yield scrapy.Request(url=trueurl, meta={'filename': filenames[index]}, callback=self.parse2, dont_filter=True)
+            # print(foldernames[index])
+            # print(trueurl)
+            yield scrapy.Request(url=trueurl, meta={'folder_name': foldernames[index]}, callback=self.parse2,
+                                 dont_filter=True)
 
     def parse2(self, response):
-        filename = response.meta['filename']
-        print(filename)
-        picnames = response.xpath('//tr[@class="file"]//a//span/text()').extract()
+        folder_name = response.meta['folder_name']
+
+        # picnames = response.xpath('//tr[@class="file"]//a//span/text()').extract()
 
         urls = response.xpath('//tr[@class="file"]//a/@href').extract()
-        for index in range(len(picnames)):
-            print(picnames[index])
-            downloadurl = response.urljoin(urls[index])
-            print(downloadurl)
+        yield TestspiderItem(folder_name=folder_name, image_urls=urls)
+        # for index in range(len(picnames)):
+        #     print(picnames[index])
+        #     downloadurl = response.urljoin(urls[index])
+        #     print(downloadurl)

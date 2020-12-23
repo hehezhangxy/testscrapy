@@ -9,4 +9,7 @@ import scrapy
 class TestspiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    filename = scrapy.Field()
+    # filename = scrapy.Field()
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
+    folder_name = scrapy.Field()
