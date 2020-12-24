@@ -17,26 +17,6 @@ class TestspiderPipeline:
         return item
 
 
-class PicPipeLine(ImagesPipeline):
-
-    def __init__(self, store_uri, download_func=None, settings=None):
-        print('start')
-        super().__init__(store_uri, download_func, settings)
-
-    def get_media_requests(self, item, info):
-        urls = ItemAdapter(item).get(self.images_urls_field, [])
-        return [Request(url=u, meta={"folder_name": item['folder_name']}) for u in urls]
-
-    def file_path(self, request, response=None, info=None, *, item=None):
-        folder_name = request.meta['folder_name']
-
-        store_path = os.path.join(settings.IMAGES_STORE, folder_name)
-        if not os.path.exists(store_path):
-            os.makedirs(store_path)
-
-        return super().file_path(request, response, info, item=item)
-
-
 class CosPicPipeLine(ImagesPipeline):
 
     def __init__(self, store_uri, download_func=None, settings=None):
@@ -58,5 +38,4 @@ class CosPicPipeLine(ImagesPipeline):
             os.makedirs(store_path)
         image_name = path.replace("full/", "")
         true_url = os.path.join(store_path, image_name)
-        print(true_url)
         return true_url
